@@ -6,3 +6,5 @@ exclude =
     .git/
     .pytest_cache/
     .venv/
+per-file-ignores =
+    src/badges/_html_colors.py:E501

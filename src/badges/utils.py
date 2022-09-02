@@ -1,6 +1,6 @@
 import requests
 
-from badges.errors import ConnectionError, ConnectionTimeoutError
+from badges import _html_colors, errors
 
 
 def check_simpleicon(name: str) -> bool:
@@ -12,10 +12,19 @@ def check_simpleicon(name: str) -> bool:
         if r.ok:
             return True
     except requests.exceptions.Timeout:
-        raise ConnectionTimeoutError("request to 'simpleicons.org' timed out")
+        raise errors.ConnectionTimeoutError("request to 'simpleicons.org' timed out")
     except requests.exceptions.ConnectionError:
-        raise ConnectionError(
+        raise errors.ConnectionError(
             "couldn't connect to 'simpleicons.org', this shouldn't happen and "
             "means your internet connection is seriously messed up!"
         )
     return False
+
+
+def check_html_color(color: str) -> bool:
+    """checks is a given color string is usable css.
+    Hex values and color-names are checked for validity.
+    """
+    if color in _html_colors.COLOR_NAME_TO_RGB:
+        return True
+    return bool(_html_colors.RE_HEX_COLOR.fullmatch(color))
