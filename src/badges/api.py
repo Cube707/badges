@@ -20,14 +20,14 @@ def _create_badge(text: str, color: str, icon: str, label: str = "") -> Badge | 
         "message": text,
         "color": color,
     }
-    r = requests.get(SHIELDSIO_API_URL, params)
-    if not r.ok:
+    resp = requests.get(SHIELDSIO_API_URL, params)
+    if not resp.ok:
         log.warning(
-            f"shield.io responden with status-code {r.status_code}"
+            f"shield.io responden with status-code {resp.status_code}"
         )  # ToDo: should this stay??
         return None
 
-    badge = Badge(text, response=r)
+    badge = Badge(text, resp.url)
     log.info(f"created {badge}")
 
     return badge

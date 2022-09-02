@@ -1,4 +1,4 @@
-from typing import overload
+from typing import Literal
 
 import requests
 
@@ -19,60 +19,42 @@ class Badge:
 
     Args:
         name (str): The name of the badge (identical to its text)
-        response (requests.Response): from shields.io
-        url (str, optional): manually pass a URL
-        svg (str, optional): manually pass svg data
-
-    Raises:
-        ParameterError: if a configuration error is detected
+        url (str): the URL of the badge
     """
 
     name: str
-    svg_data: str
 
-    @overload
-    def __init__(self, name: str, *, response: requests.Response):
-        ...
-
-    @overload
-    def __init__(self, name: str, *, url: str, svg: str):
-        ...
-
-    def __init__(
-        self,
-        name: str,
-        *,
-        response: requests.Response = None,
-        url: str = None,
-        svg: str = None,
-    ) -> None:
+    def __init__(self, name: str, url: str) -> None:
         self.name = name
-        if response is not None:
-            if not isinstance(response, requests.Response):
-                raise errors.ParameterError(
-                    "Badge() argument 'response' must be of type 'Response'"
-                )
-            self._url = response.url
-            self.svg_data = response.text
-        else:
-            if url is None:
-                raise errors.ParameterError(
-                    "Badge() missing 1 required keyword argument: 'url'"
-                )
-            if svg is None:
-                raise errors.ParameterError(
-                    "Badge() missing 1 required keyword argument: 'svg'"
-                )
-            self._url = url
-            self.svg_data = svg
+        self._url = url
 
     def __repr__(self) -> str:
         return f"<Badge object '{self.name}'>"
 
+    def get_svg(
+        self,
+        style: Literal[
+            "plastic", "flat", "flat-square", "for-the-badge", "social"
+        ] = "flat",
+    ) -> str:
+        r = requests.get(self.get_url(style))
+        if not r.ok:
+            raise errors.ServerError(f"shield.io returned status-code: {r.status_code}")
+        return r.text
+
+    def get_url(
+        self,
+        style: Literal[
+            "plastic", "flat", "flat-square", "for-the-badge", "social"
+        ] = "flat",
+    ) -> str:
+        "get the url for a sperifiv style"
+        return getattr(self, f"url_{style}")
+
     @property
     def url(self) -> str:
-        "the badge URL on shields.io"
-        return self.url_flat
+        "the default url"
+        return self.get_url()
 
     @property
     def url_plastic(self) -> str:

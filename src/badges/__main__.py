@@ -157,9 +157,9 @@ def create(text, color, icon_name, icon_file, output, label, output_type, style)
         return
 
     if output_type == "url":
-        output.write(getattr(badge, f"url_{style}"))
+        output.write(badge.get_url(style))
     if output_type == "svg":
-        output.write(badge.svg_data)
+        output.write(badge.get_svg(style))
 
 
 if __name__ == "__main__":

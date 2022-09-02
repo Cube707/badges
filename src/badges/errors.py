@@ -19,6 +19,12 @@ class ConnectionTimeoutError(BadgesBaseError, requests.exceptions.Timeout):
     pass
 
 
+class ServerError(BadgesBaseError):
+    """the server of an external service returned an error"""
+
+    pass
+
+
 class ParameterError(BadgesBaseError, TypeError, ValueError):
     """missconfiguration when calling a badges-function"""
 
