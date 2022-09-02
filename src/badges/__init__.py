@@ -6,7 +6,7 @@ from . import errors
 
 
 __doc__ = "package to create static, standartised badges via the shields.io API"
-__version__ = "0.0.0-dev0"
+__version__ = "0.0.1-dev0"
 __all__ = ["Badge", "errors"]
 
 
