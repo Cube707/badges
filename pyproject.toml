@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "badges"
+description = "created static, standardised svg badges using the shield.io API"
+authors = [
+    { name = "Jan Wille", email = "mail@janwille.de" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "click>=8",
+    "requests"
+]
+dynamic = ["version", "readme"]
+
+[tool.setuptools.dynamic]
+version = {attr = "badges.__version__"}
+readme = {file = ["README.md"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"
+src_paths = ["src", "tests"]
+lines_after_imports = 2
