@@ -23,6 +23,9 @@ readme = {file = ["README.md"]}
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[project.scripts]
+badges = "badges.__main__:cli"
+
 
 [tool.black]
 line-length = 88
