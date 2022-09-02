@@ -17,3 +17,15 @@ class ConnectionTimeoutError(BadgesBaseError, requests.exceptions.Timeout):
     """a request to an external service timed out"""
 
     pass
+
+
+class ParameterError(BadgesBaseError, TypeError, ValueError):
+    """missconfiguration when calling a badges-function"""
+
+    pass
+
+
+class BadgeCreationError(BadgesBaseError):
+    """it was not possible to create the requested badge"""
+
+    pass
