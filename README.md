@@ -18,3 +18,12 @@ Install using `pip`:
 ```bash
 pip install git+https://github.com/Cube707/badges
 ```
+
+## Goals and Todos
+
+- [ ] first demo that can create single badges
+- [ ] complete API/cli
+  - [ ] `create` command, for making a single badge
+  - [ ] `generate` command, for multiple badges at once
+  - [ ] `check` command, to check data validity (not sure if it makes sense??)
+- [ ] make async if multiple badges are created
