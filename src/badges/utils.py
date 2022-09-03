@@ -20,7 +20,7 @@ def convert_imagefile(file: FileIO) -> str | None:
         log.warning("couldn't detect file-type, guessing its a 'svg'")
         type = "image/svg+xml"
     else:
-        log.debug(f"file was detected to have '{type=}'")
+        log.debug(f"file was detected to have {type=}")
 
     data = b64encode(file.read())
     return f"data:{type};base64,{data.decode('ascii')}"
