@@ -66,9 +66,9 @@ def cli():
     default=None,
 )
 @click.option(
-    "-f",
+    "-p",
     "--icon-file",
-    type=click.Path(exists=True, dir_okay=False),
+    type=click.File("rb", lazy=True),
     help="A icon-file to be used, should be a svg, put png is also acceptable.",
     default=None,
 )
@@ -130,15 +130,13 @@ def cli():
 @click.help_option("-h", "--help")
 def create(text, color, icon_name, icon_file, output, label, output_type, style):
     """Create a badge. Uses the given options to querry the shield.io API and
-    returnes either the URL or the full svg data.
-    """
+    returnes either the URL or the full svg data."""
 
     if icon_name is not None:
         icon = icon_name
 
     if icon_file is not None:
-        icon = icon_name
-        pass  # ToDo
+        icon = utils.convert_imagefile(icon_file)
 
     if icon_name is not None and icon_file is not None:
         log.warning(

@@ -1,6 +1,29 @@
+import logging
+from base64 import b64encode
+from io import FileIO
+from mimetypes import guess_type
+
 import requests
 
 from badges import _html_colors, errors
+
+
+log = logging.getLogger("badges")
+
+
+def convert_imagefile(file: FileIO) -> str | None:
+    """takes a given I/O buffer and returnes a data-string
+    ready to be added to the url-parameters"""
+
+    type, _ = guess_type(file.name)
+    if type is None:
+        log.warning("couldn't detect file-type, guessing its a 'svg'")
+        type = "image/svg+xml"
+    else:
+        log.debug(f"file was detected to have '{type=}'")
+
+    data = b64encode(file.read())
+    return f"data:{type};base64,{data.decode('ascii')}"
 
 
 def check_internet_conection(host="https://google.com") -> bool:
