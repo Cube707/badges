@@ -48,8 +48,8 @@ class Badge:
             "plastic", "flat", "flat-square", "for-the-badge", "social"
         ] = "flat",
     ) -> str:
-        "get the url for a sperifiv style"
-        return getattr(self, f"url_{style}")
+        "get the url for a specific style"
+        return getattr(self, f"url_{style.replace('-','_')}")
 
     @property
     def url(self) -> str:

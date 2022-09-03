@@ -3,6 +3,15 @@ import requests
 from badges import _html_colors, errors
 
 
+def check_internet_conection(host="https://google.com") -> bool:
+    """checks if internet-connection is available"""
+    try:
+        requests.get(host)
+    except Exception:
+        return False
+    return True
+
+
 def check_simpleicon(name: str) -> bool:
     """checks if a given name existis on simpleicon.org"""
 
