@@ -5,7 +5,7 @@ from badges import Badge, utils
 
 def test_repr():
     badge = Badge("GitHub", url="https://example.org")
-    assert "<Badge object 'GitHub'>" == str(badge)
+    assert "<Badge 'GitHub'>" == str(badge)
 
 
 def test_properties_url_styles():

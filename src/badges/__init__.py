@@ -29,7 +29,7 @@ class Badge:
         self._url = url
 
     def __repr__(self) -> str:
-        return f"<Badge object '{self.name}'>"
+        return f"<Badge '{self.name}'>"
 
     def get_svg(
         self,
