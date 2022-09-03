@@ -8,6 +8,7 @@ from badges import __version__, api, errors, utils
 log = logging.getLogger("badges")
 
 
+# ---------- helper functions ----------------- #
 def _validate_color(ctx, param, val):
     if param.name == "color" and val is not None:
         if not utils.check_html_color(val):
@@ -29,6 +30,7 @@ def _change_logging(ctx, param, val):
         log.setLevel(logging.DEBUG)
 
 
+# ---------- command line interface ----------- #
 @click.group
 @click.help_option("-h", "--help")
 @click.version_option(
@@ -132,12 +134,6 @@ def create(text, color, icon_name, icon_file, output, label, output_type, style)
     """Create a badge. Uses the given options to querry the shield.io API and
     returnes either the URL or the full svg data."""
 
-    if icon_name is not None:
-        icon = icon_name
-
-    if icon_file is not None:
-        icon = utils.convert_imagefile(icon_file)
-
     if icon_name is not None and icon_file is not None:
         log.warning(
             "you are using both 'icon-name' and 'icon-file', but can only use one! "
@@ -148,6 +144,12 @@ def create(text, color, icon_name, icon_file, output, label, output_type, style)
         log.warning(
             "missing 'icon-name', 'icon-file' and 'label', the badge might look wird."
         )
+
+    if icon_name is not None:
+        icon = icon_name
+
+    if icon_file is not None:
+        icon = utils.convert_imagefile(icon_file)
 
     try:
         badge = api._create_badge(text, color, icon, label)
