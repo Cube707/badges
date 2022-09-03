@@ -38,18 +38,13 @@ def check_internet_conection(host="https://google.com") -> bool:
 def check_simpleicon(name: str) -> bool:
     """checks if a given name existis on simpleicon.org"""
 
-    url = f"https://simpleicons.org/icons/{name}.svg"
     try:
-        r = requests.get(url, timeout=0.5)
-        if r.ok:
-            return True
-    except requests.exceptions.Timeout:
-        raise errors.ConnectionTimeoutError("request to 'simpleicons.org' timed out")
-    except requests.exceptions.ConnectionError:
-        raise errors.ConnectionError(
-            "couldn't connect to 'simpleicons.org', this shouldn't happen and "
-            "means your internet connection is seriously messed up!"
-        )
+        resp = requests.get(f"https://simpleicons.org/icons/{name}.svg")
+    except requests.RequestException:
+        raise errors.ServerError("simpleicons.org can not be reached, maybe its down?")
+
+    if resp.ok:
+        return True
     return False
 
 
