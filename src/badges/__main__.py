@@ -2,7 +2,7 @@ import logging
 
 import click
 
-from badges import __version__, api, utils
+from badges import __version__, api, errors, utils
 
 
 log = logging.getLogger("badges")
@@ -149,9 +149,10 @@ def create(text, color, icon_name, icon_file, output, label, output_type, style)
             "missing 'icon-name', 'icon-file' and 'label', the badge might look wird."
         )
 
-    badge = api._create_badge(text, color, icon, label)
-    if badge is None:
-        log.error("badge could not be created.")
+    try:
+        badge = api._create_badge(text, color, icon, label)
+    except errors.BadgeCreationError as e:
+        log.error(e)
         return
 
     if output_type == "url":

@@ -17,3 +17,7 @@ class ParameterError(BadgesBaseError, TypeError, ValueError):
 
 class BadgeCreationError(BadgesBaseError):
     """it was not possible to create the requested badge"""
+
+
+class IconfileToBigError(BadgeCreationError):
+    """the provided iconfile is to big"""

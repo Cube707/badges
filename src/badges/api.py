@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import urlencode
 
 import requests
 
@@ -6,6 +7,8 @@ from badges import Badge, errors
 
 
 SHIELDSIO_API_URL = "https://img.shields.io/static/v1"
+SHIELDSIO_MAX_HEADER_SIZE = 8192
+
 log = logging.getLogger("badges")
 
 
@@ -20,6 +23,13 @@ def _create_badge(text: str, color: str, icon: str, label: str = "") -> Badge:
         "message": text,
         "color": color,
     }
+    if (size := len(urlencode(params))) > SHIELDSIO_MAX_HEADER_SIZE:
+        raise errors.IconfileToBigError(
+            f"HTTP headers have a size of {size} bytes, which is to bigger than the "
+            f"allowed {SHIELDSIO_MAX_HEADER_SIZE} bytes"
+        )
+    log.debug(f"HTTP-header-size: {size}")
+
     try:
         # ToDo: should we even call the API?
         # it doesn't report misconfigs anyway..
