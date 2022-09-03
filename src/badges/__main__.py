@@ -9,14 +9,14 @@ log = logging.getLogger("badges")
 
 
 def _validate_color(ctx, param, val):
-    if param.name == "color":
+    if param.name == "color" and val is not None:
         if not utils.check_html_color(val):
             raise click.BadParameter(f"'{val}' is not a valid html-color")
     return val
 
 
 def _validate_simpleicon(ctx, param, val):
-    if param.name == "icon_name":
+    if param.name == "icon_name" and val is not None:
         if not utils.check_simpleicon(val):
             raise click.BadParameter(f"'{val}' doesn't exist on simpleicon.org")
     return val
