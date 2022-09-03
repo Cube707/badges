@@ -4,7 +4,7 @@
 from re import compile
 
 
-RE_HEX_COLOR = compile(r"^#([0-9a-fA-F]{3}){1,2}$")
+RE_HEX_COLOR = compile(r"#([0-9a-fA-F]{3}){1,2}|#[0-9a-fA-F]{8}")
 
 # this code is directly taken from the `colour` package
 # see https://github.com/vaab/colour/blob/11f138eb7841d2045160b378a2eec0c2321144c0/colour.py#L52-L199
