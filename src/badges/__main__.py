@@ -4,7 +4,6 @@ import click
 
 from badges import __version__, api, errors, utils
 
-
 log = logging.getLogger("badges")
 
 
