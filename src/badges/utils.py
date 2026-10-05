@@ -7,7 +7,6 @@ import requests
 
 from badges import _html_colors, errors
 
-
 log = logging.getLogger("badges")
 
 
