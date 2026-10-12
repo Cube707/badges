@@ -1,8 +1,6 @@
-"""this module containes utility-constants for HTML-color validation
-"""
+"""this module containes utility-constants for HTML-color validation"""
 
 from re import compile
-
 
 RE_HEX_COLOR = compile(r"#([0-9a-fA-F]{3}){1,2}|#[0-9a-fA-F]{8}")
 
