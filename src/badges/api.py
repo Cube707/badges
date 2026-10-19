@@ -5,7 +5,6 @@ import requests
 
 from badges import Badge, errors
 
-
 SHIELDSIO_API_URL = "https://img.shields.io/static/v1"
 SHIELDSIO_MAX_HEADER_SIZE = 8192
 
